@@ -4,10 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,23 +16,24 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "поле не может быть пустым")
-    @Size(min=2, message = "Не меньше 2 знаков")
     private String username;
 
-    @NotEmpty(message = "поле не может быть пустым")
-    @Size(min=2, message = "Не меньше 2 знаков")
     private String lastname;
 
-    @Email(message = "введен некорректный email")
     private String email;
 
-    @NotEmpty(message = "поле не может быть пустым")
-    @Size(min=2, message = "Не меньше 2 знаков")
+    private Long age;
+
     private String password;
 
     @Transient
     private String passwordConfirm;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Role> roles;
+
+    public User() {
+    }
 
     public String getLastname() {
         return lastname;
@@ -51,18 +51,20 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Role> roles;
-
-    public User() {
-    }
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getAge() {
+        return age;
+    }
+
+    public void setAge(Long age) {
+        this.age = age;
     }
 
     @Override
@@ -116,8 +118,31 @@ public class User implements UserDetails {
         this.passwordConfirm = passwordConfirm;
     }
 
+    //получить множество ролей пользов
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    //получить конректную роль пользов
+    public String getUserRole() {
+        StringBuilder sbld = new StringBuilder();
+        List<Role> roleList = new ArrayList<>();
+        //получим роли пользователя и запишем их в массив объектов
+        Set<Role> set = this.getRoles();
+        Object[] arr = set.toArray();
+        //чтобы избежать проблем с кастингом, перепишем роли из массива об-в в лист Ролей
+        for (Object o : arr) {
+            roleList.add((Role) o);
+        }
+        //StringBuilder
+        for (Role r : roleList) {
+            if (r.getName().equals("ROLE_USER")) {
+                sbld.append("USER").append(" ");
+            } else if (r.getName().equals("ROLE_ADMIN")) {
+                sbld.append("ADMIN").append(" ");
+            }
+        }
+        return sbld.toString().trim();
     }
 
     public void setRoles(Set<Role> roles) {

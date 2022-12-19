@@ -10,13 +10,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -53,9 +53,7 @@ public class UserService implements UserDetailsService {
 
     public void updateUser(User user) {
         User userFromDB = userRepository.findById(user.getId()).orElse(new User());
-
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-        user.setPassword(bCryptPasswordEncoder.encode(userFromDB.getPassword()));
+         user.setPassword(userFromDB.getPassword());
         userRepository.save(user);
     }
 
@@ -65,9 +63,8 @@ public class UserService implements UserDetailsService {
         if (userFromDB != null) {
             return false;
         }
-
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        System.out.println("@@@@  + password " +user.getPassword());
         userRepository.save(user);
         return true;
     }

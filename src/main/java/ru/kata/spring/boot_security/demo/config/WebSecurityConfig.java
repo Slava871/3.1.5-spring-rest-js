@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.config;
 
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,29 +29,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf()
-                    .disable()
+    protected void configure(HttpSecurity http) throws Exception {
+        http.formLogin()
+                .loginPage("/login")
+                .successHandler(successUserHandler)
+                .loginProcessingUrl("/login")
+                .usernameParameter("j_login")
+                .passwordParameter("j_password")
+                .permitAll();
+
+        http.logout()
+                .permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
+                .and().csrf().disable();
+
+        http
                 .authorizeRequests()
-                    //Доступ только для не зарегистрированных пользователей
-                //.antMatchers("/registration").not().fullyAuthenticated()
-                    //Доступ только для пользователей с ролью Администратор
-                    .antMatchers("/registration").hasRole("ADMIN")
-                    .antMatchers("/admin").hasRole("ADMIN")
-                    .antMatchers("/edit").hasRole("ADMIN")
-                //Доступ только для пользователей с ролью USER
-                    .antMatchers("/news").hasRole("USER")
-                    //Доступ разрешен всем пользователей
-                    .antMatchers("/").hasRole("ADMIN")
-                //Все остальные страницы требуют аутентификации
-                .anyRequest().authenticated()
-                .and()
-                    //Настройка для входа в систему
-                    .formLogin().successHandler(successUserHandler).permitAll()
-                    .and()
-                    .logout()
-                    .permitAll();
+                .antMatchers("/login").anonymous()
+                //.antMatchers("/admin/**").access("hasAnyAuthority('ADMIN')")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user").hasRole("USER")
+                .anyRequest().authenticated();
     }
 
     @Autowired
