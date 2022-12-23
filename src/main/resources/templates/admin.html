@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" style="height: 648px;padding: 5px;margin: 5px;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Admin</title>
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="/css/styles.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<div class="row" style="background: #000000; color: rgb(255,255,255);">
+    <div class=" userDataBar col-4 align-self-center" style="text-align: left;transform: translate(20px) translateY(0px)">
+        <!--JS GENERATED-->
+    </div>
+    <div class="col align-self-center" style="text-align: right;transform: translate(-20px) translateY(0px);">
+        <a class="btn btn-primary" role="button" href="/logout" style="background: transparent; border: transparent; color: rgb(255,255,255);">Logout</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col" style="max-width: 15%;padding: 1px;">
+        <ul class=" nav nav-pills flex-column">
+            <li class="nav-item">
+                <a class=" manage nav-link active" href="/">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a class=" showUser nav-link" href="/user">User</a>
+            </li>
+            <li class="nav-item"></li>
+        </ul>
+    </div>
+    <div class="col offset-0" style="background: #e8e7e7;min-height: 1000px;">
+        <div class="row">
+            <div class="col">
+                <h1>Admin panel</h1>
+            </div>
+        </div>
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" role="tab" data-bs-toggle="tab" id="utable" href="#tab-1">Users table</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" role="tab" data-bs-toggle="tab"  href="#tab-2">New user</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active" role="tabpanel">
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 5px;">
+                                <strong style = "font-size: 21px;">All users</strong>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="background: #ffffff;text-align: center;">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>First Name</th>
+                                <th>Second Name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody id = "adminPanel">
+                           <!-- -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                 <div id="tab-2" class="tab-pane" role="tabpanel">
+                    <form class="newUser text-center" style="background: #ffffff;">
+                        <div class="row" style="text-align: left;border-style: solid;border-color: #e7ecf2; background: #dedcdc;">
+                            <div class="col">
+                                <h1 class="text-start">Add new user</h1>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="newUser form-label">
+                                    <strong>Username</strong>
+                                </label>
+                                <input required name = "newusername" class="form-control" type="text"/>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="form-label">
+                                    <strong>First name</strong>
+                                </label>
+                                <input name = "newfirstname" class="form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="form-label">
+                                    <strong>Last name</strong>
+                                </label>
+                                <input class="form-control"  name = "newsecondname" type="text" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="form-label">
+                                    <strong>Age</strong>
+                                </label>
+                                <input name = "newage"  class="form-control" type="number" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="form-label">
+                                    <strong>Email</strong>
+                                </label>
+                                <input name = "newemail"  class="form-control" type="email" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="form-label">
+                                    <strong>Password</strong>
+                                </label>
+                                <input  name = "newpassword"  required class="form-control" type="password"  />
+                            </div>
+                        </div>
+                        <div  class="row justify-content-center">
+                            <div class="col" style="max-width: 40%;">
+                                <label class="form-label">
+                                    <strong>Role</strong>
+                                </label>
+                                <select name = "newroles"  required class="form-select" data-bs-toggle="tooltip" title="hold Lctrl for multiselect"  multiple style="max-height: 70px;min-height: 40px;">
+                                    <option  value=1>ADMIN</option>
+                                    <option  value=2>USER</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="margin: 10px;">
+                                <button class="btn btn-primary" name = "newUserbutton" type="button" style="background: rgb(14,152,53);">Add new user</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/bs-init.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>
