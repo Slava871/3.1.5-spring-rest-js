@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.dto.UserDTO;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.util.UserNotFoundException;
+import ru.kata.spring.boot_security.demo.Except.UserNotFoundException;
 
 import java.util.List;
 
